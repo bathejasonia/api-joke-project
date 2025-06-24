@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JokeHub 😂</title>
+  <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+
+  <header>
+    <h1>JokeHub 😂</h1>
+    <p>Your daily dose of laughter!</p>
+  </header>
+
+  <main class="joke-container">
+    <h2 id="setup">Why don't scientists trust atoms?</h2>
+    <p id="punchline">Because they make up everything!</p>
+    <button onclick="showJoke()">Another Joke</button>
+  </main>
+
+  <footer>
+    <p>&copy; <%= new Date().getFullYear() %> JokeHub. All rights reserved.</p>
+  </footer>
+
+  <script>
+    async function showJoke() {
+      const setup = document.getElementById('setup');
+      const punchline = document.getElementById('punchline');
+      
+      setup.textContent = "Loading...";
+      punchline.textContent = "";
+
+      try {
+        const res = await fetch('https://official-joke-api.appspot.com/jokes/random');
+        const data = await res.json();
+        setup.textContent = data.setup;
+        punchline.textContent = data.punchline;
+      } catch (error) {
+        setup.textContent = "Oops! Couldn't fetch a joke.";
+        punchline.textContent = "Please try again.";
+      }
+    }
+  </script>
+
+</body>
+</html>
